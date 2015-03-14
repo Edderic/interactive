@@ -1,4 +1,4 @@
-require "interactive_question/version"
+require "interactive/version"
 require 'interactive/question'
 require 'interactive/response'
 
