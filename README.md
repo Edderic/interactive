@@ -1,5 +1,5 @@
-# Interactive::Question
-
+# Interactive
+This is a helper module to assist in interactive question-answering events in the command line.
 
 ## Installation
 
@@ -19,7 +19,46 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+If you want to ask a user a question expecting certain answers:
+
+```ruby
+question = Interactive::Question.new do |ques|
+  ques.question = "What do you want to do?"
+  ques.options = [:add, :edit, :update, :remove]
+end
+```
+
+You can run the loop and wait for a valid response:
+
+```ruby
+question.ask_and_wait_for_valid_response do |response|
+  if response.add?
+    # add the thingymajigger
+  elsif response.edit?
+    # edit the thingymajigger
+  elsif response.update?
+    # etc...
+  end
+end
+```
+
+That will ask the question appended by the shortcuts:
+
+```ruby
+# => What do you want to do? [a/e/u/r]
+```
+
+If the response is invalid, it prints out the question and goes into detail as
+to what the shortcuts stand for:
+
+```ruby
+$ bad-response
+# => What do you want to do? [a/e/u/r]
+# =>   a -- add
+# =>   e -- edit
+# =>   u -- update
+# =>   r -- remove
+```
 
 ## Development
 
