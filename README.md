@@ -48,6 +48,13 @@ That will ask the question appended by the shortcuts:
 # => What do you want to do? [a/e/u/r]
 ```
 
+If the response is valid:
+
+```ruby
+$ a
+# => response.add? will return true
+```
+
 If the response is invalid, it prints out the question and goes into detail as
 to what the shortcuts stand for:
 
