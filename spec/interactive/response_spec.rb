@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe 'Interactive::Response' do
+  describe 'have :invalid as an arg' do
+    it 'throws an error' do
+      message = "may not use :invalid or 'invalid' as an argument. May not overwrite Interactive::Response#invalid"
+      expect{ Interactive::Response.new(:yes, :invalid) }.to raise_error(ArgumentError, message)
+    end
+  end
+
   describe 'with only one arg' do
     it 'throws an error' do
       message = "wrong number of arguments (need at least two arguments)"

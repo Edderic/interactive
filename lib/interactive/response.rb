@@ -8,6 +8,8 @@ module Interactive
       end
 
       raise ArgumentError, "wrong number of arguments (need at least two arguments)" if @args.length == 1
+      raise ArgumentError, "may not use :invalid or 'invalid' as an argument. May not overwrite Interactive::Response#invalid" if @args.map(&:to_s).include?('invalid')
+
       @_response = STDIN.gets.chomp
 
       @args.each do |arg|
