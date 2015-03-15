@@ -29,6 +29,38 @@ describe 'Interactive::Response' do
     end
   end
 
+  describe 'with args 1, 2, 3, :cancel' do
+    describe '1 is the response' do
+      before do
+        one_response = double('String', chomp: '1')
+        allow(STDIN).to receive(:gets).and_return(one_response)
+
+        options = [1, 2, 3, :cancel]
+        @r = Interactive::Response.new(options)
+      end
+
+      it 'should be whole number 1' do
+        expect(@r).to be_whole_number_1
+      end
+
+      it 'should be whole number' do
+        expect(@r).to be_whole_number
+      end
+
+      it 'should not be 2' do
+        expect(@r).not_to be_whole_number_2
+      end
+
+      it 'should not be 3' do
+        expect(@r).not_to be_whole_number_3
+      end
+
+      it 'should not be cancel' do
+        expect(@r).not_to be_cancel
+      end
+    end
+  end
+
   describe 'with args :yes, :no, :cancel, :interact' do
     describe 'y is the response' do
       before do
@@ -52,6 +84,10 @@ describe 'Interactive::Response' do
 
       it 'is not invalid' do
         expect(@r).not_to be_invalid
+      end
+
+      it 'is not a whole number' do
+        expect(@r).not_to be_whole_number
       end
     end
 

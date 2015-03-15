@@ -8,6 +8,7 @@ module Interactive
 
       define_methods
       define_invalid
+      define_whole_number
     end
 
     private
@@ -21,8 +22,14 @@ module Interactive
 
     def define_methods
       @args.each do |arg|
-        define_singleton_method "#{arg}?" do
-          @_response.match(/^#{arg[0]}$/i) ? true : false
+        if whole_num arg
+          define_singleton_method "whole_number_#{arg}?" do
+            @_response.strip.match(/^#{arg}$/i) ? true : false
+          end
+        else
+          define_singleton_method "#{arg}?" do
+            @_response.match(/^#{arg[0]}$/i) ? true : false
+          end
         end
       end
     end
@@ -33,8 +40,14 @@ module Interactive
       end
     end
 
+    def define_whole_number
+      define_singleton_method "whole_number?" do
+        methods(false).select {|m| m.to_s.match(/whole_number_\d+/)}.any? {|m| send(m) }
+      end
+    end
+
     def first_chars_not_unique
-      @args.map{|arg| arg[0]}.uniq.length != @args.length
+      @args.map{|arg| whole_num(arg) ? arg : arg[0]}.uniq.length != @args.length
     end
 
     def set_args(args)
@@ -43,6 +56,10 @@ module Interactive
       else
         @args = args
       end
+    end
+
+    def whole_num(arg)
+      arg.to_s.match(/^\d+$/)
     end
   end
 end
