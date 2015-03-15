@@ -2,6 +2,31 @@ require 'spec_helper'
 
 describe 'Interactive::Question' do
   describe '#ask_and_wait_for_valid_response' do
+    it 'raises an error if no question is provided' do
+      question = "Which item do you want to use?"
+      question_with_opts = "#{question} [y/n/c]"
+      options = [:yes, :no, :cancel]
+
+      expect do
+        iq = Interactive::Question.new do |i|
+          i.options = options
+        end
+      end.to raise_error(ArgumentError, "question cannot be nil nor empty.")
+    end
+
+    it 'raises an error if question is blank' do
+      question = ""
+      question_with_opts = "#{question} [y/n/c]"
+      options = [:yes, :no, :cancel]
+
+      expect do
+        iq = Interactive::Question.new do |i|
+          i.question = question
+          i.options = options
+        end
+      end.to raise_error(ArgumentError, "question cannot be nil nor empty.")
+    end
+
     it 'should ask the question' do
       question = "Which item do you want to use?"
       question_with_opts = "#{question} [y/n/c]"

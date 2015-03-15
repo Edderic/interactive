@@ -4,6 +4,8 @@ module Interactive
 
     def initialize(&block)
       yield self
+
+      raise ArgumentError, "question cannot be nil nor empty." if question.nil? || question.empty?
     end
 
     def ask_and_wait_for_valid_response(&block)
