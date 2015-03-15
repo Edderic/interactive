@@ -7,20 +7,13 @@ module Interactive
     end
 
     def ask_and_wait_for_valid_response(&block)
-      resp = NullResponse.new
-
-      while resp.invalid? do
+      loop do
         puts "#{question} #{shortcuts_string}"
         resp = Interactive::Response.new(options)
         puts shortcuts_meanings if resp.invalid?
 
         yield resp
-      end
-    end
-
-    class NullResponse
-      def invalid?
-        true
+        break unless resp.invalid?
       end
     end
 
