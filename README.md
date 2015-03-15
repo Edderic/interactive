@@ -1,5 +1,7 @@
 # Interactive
 [![Gem Version](https://badge.fury.io/rb/interactive.svg)](http://badge.fury.io/rb/interactive)
+[![Build Status](https://travis-ci.org/Edderic/interactive.svg)](https://travis-ci.org/Edderic/interactive)
+
 This is a helper module to assist in interactive question-answering events in the command line.
 
 ## Installation
