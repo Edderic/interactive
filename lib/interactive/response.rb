@@ -2,7 +2,7 @@ module Interactive
   class Response
     def initialize(*args)
       set_args(args)
-      check_validity(args)
+      check_validity
 
       @_response = STDIN.gets.chomp
 
@@ -12,7 +12,7 @@ module Interactive
 
     private
 
-    def check_validity(args)
+    def check_validity
       raise ArgumentError, "wrong number of arguments (need at least two arguments)" if @args.length == 1
       raise ArgumentError, "may not use :invalid or 'invalid' as an argument. May not overwrite Interactive::Response#invalid" if @args.map(&:to_s).include?('invalid')
 
