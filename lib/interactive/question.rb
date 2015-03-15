@@ -5,7 +5,8 @@ module Interactive
     def initialize(&block)
       yield self
 
-      options = Array(options)
+      options = Array(@options)
+
       raise ArgumentError, "question cannot be nil nor empty." if question.nil? || question.empty?
       raise ArgumentError, "options cannot be empty." if options.empty?
     end
