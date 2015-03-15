@@ -10,7 +10,7 @@ This is a helper module to assist in interactive question-answering events in th
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'interactive_question'
+gem 'interactive'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install interactive_question
+    $ gem install interactive
 
 ## Usage
 
