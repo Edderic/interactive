@@ -10,6 +10,8 @@ module Interactive
       raise ArgumentError, "wrong number of arguments (need at least two arguments)" if @args.length == 1
       raise ArgumentError, "may not use :invalid or 'invalid' as an argument. May not overwrite Interactive::Response#invalid" if @args.map(&:to_s).include?('invalid')
 
+      raise ArgumentError, "may not have keyword options that have the same first letter." if @args.map{|arg| arg[0]}.uniq.length != @args.length
+
       @_response = STDIN.gets.chomp
 
       @args.each do |arg|

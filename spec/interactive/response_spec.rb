@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe 'Interactive::Response' do
+  describe 'two of the option keywords have the same first letter' do
+    it 'raises an error' do
+      message = "may not have keyword options that have the same first letter."
+      expect{ Interactive::Response.new(:hello, :hi) }.to raise_error(ArgumentError, message)
+    end
+  end
+
   describe 'have :invalid as an arg' do
     it 'throws an error' do
       message = "may not use :invalid or 'invalid' as an argument. May not overwrite Interactive::Response#invalid"
