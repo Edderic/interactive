@@ -8,16 +8,23 @@ describe 'Interactive::Response' do
     end
   end
 
+  describe 'have :whole_number as an arg' do
+    it 'raises an error' do
+      message = "may not use :whole_number or 'whole_number' as an argument. Private method."
+      expect{ Interactive::Response.new(:yes, :whole_number) }.to raise_error(ArgumentError, message)
+    end
+  end
+
   describe 'have :invalid as an arg' do
-    it 'throws an error' do
-      message = "may not use :invalid or 'invalid' as an argument. May not overwrite Interactive::Response#invalid"
+    it 'raises an error' do
+      message = "may not use :invalid or 'invalid' as an argument. Private method."
       expect{ Interactive::Response.new(:yes, :invalid) }.to raise_error(ArgumentError, message)
     end
   end
 
   describe 'with only one arg' do
-    it 'throws an error' do
-      message = "wrong number of arguments (need at least two arguments)"
+    it 'raises an error' do
+      message = "wrong number of arguments (need at least two arguments)."
       expect{ Interactive::Response.new(:yes) }.to raise_error(ArgumentError, message)
     end
   end
