@@ -38,7 +38,7 @@ module Interactive
     end
 
     def set_args(args)
-      if args.first.class.ancestors.include?(Enumerable)
+      if args.first.respond_to?(:to_a)
         @args = args.first
       else
         @args = args
