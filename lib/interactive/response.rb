@@ -2,7 +2,6 @@ module Interactive
   class Response
     def initialize(*args)
       set_args(args)
-
       check_validity(args)
 
       @_response = STDIN.gets.chomp
