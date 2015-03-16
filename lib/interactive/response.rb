@@ -49,7 +49,7 @@ module Interactive
     end
 
     def first_chars_not_unique
-      @args.map{|arg| Interactive::Option.new(arg).shortcut_value }.uniq.length != @args.length
+      @args.map{|arg| arg.shortcut_value }.uniq.length != @args.length
     end
 
     def set_args(args)
