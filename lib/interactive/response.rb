@@ -3,7 +3,7 @@ require 'interactive'
 module Interactive
   class Response
     def initialize(*args)
-      set_args(args)
+      @args = Array(args).flatten
       check_validity
 
       @_response = STDIN.gets.chomp
@@ -44,14 +44,6 @@ module Interactive
 
     def first_chars_not_unique
       @args.map{|arg| arg.shortcut_value }.uniq.length != @args.length
-    end
-
-    def set_args(args)
-      if args.first.respond_to?(:to_a)
-        @args = args.first
-      else
-        @args = args
-      end
     end
   end
 end
