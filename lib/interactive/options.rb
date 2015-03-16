@@ -16,13 +16,21 @@ module Interactive
     end
 
     def shortcuts_meanings
-      options.inject("") { |accum, opt| "#{accum}  #{opt.shortcut_value} -- #{opt}\n"}
+      options.inject("") { |accum, opt| "#{accum}  #{opt.shortcut_value} -- #{opt.value}\n"}
     end
 
     private
 
     def flatten_ranges(options)
-      @options = options.inject([]) {|accum, opt| opt.respond_to?(:to_a) ? accum | opt.to_a : accum << opt}
+      @options = options.inject([]) do |accum, opt|
+        if opt.class == Range
+          accum | opt.to_a
+        elsif opt.respond_to?(:to_a)
+          accum | opt.map.with_index {|item, index| {index.to_s => item} }
+        else
+          accum << opt
+        end
+      end
     end
 
     def wrap_each_option
