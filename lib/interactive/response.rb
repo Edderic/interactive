@@ -24,14 +24,8 @@ module Interactive
 
     def define_methods
       @args.each do |arg|
-        if whole_num arg
-          define_singleton_method "whole_number_#{arg}?" do
-            @_response.strip.match(/^#{arg}$/i) ? true : false
-          end
-        else
-          define_singleton_method "#{arg}?" do
-            @_response.match(/^#{arg[0]}$/i) ? true : false
-          end
+        define_singleton_method arg.query_method_name do
+          @_response.strip.match(/^#{arg.shortcut_value}$/i) ? true : false
         end
       end
     end
@@ -58,10 +52,6 @@ module Interactive
       else
         @args = args
       end
-    end
-
-    def whole_num(arg)
-      arg.to_s.match(/^\d+$/)
     end
   end
 end

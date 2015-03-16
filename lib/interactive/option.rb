@@ -22,6 +22,10 @@ module Interactive
     def shortcut_value
       @option
     end
+
+    def query_method_name
+      "whole_number_#{shortcut_value}?"
+    end
   end
 
   class WordOption < SimpleDelegator
@@ -32,6 +36,10 @@ module Interactive
 
     def shortcut_value
       @option.to_s[0]
+    end
+
+    def query_method_name
+      "#{@option}?"
     end
   end
 end
