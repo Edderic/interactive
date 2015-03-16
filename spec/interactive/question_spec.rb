@@ -102,5 +102,19 @@ describe 'Interactive::Question' do
         expect(iq).to have_received(:puts).with(meaning_opts).once
       end
     end
+
+    it 'is able to process whole numbers' do
+      response_20 = instance_double('String', chomp: '20')
+      allow(STDIN).to receive(:gets).and_return(response_20)
+
+      Interactive::Question.new do |i|
+        i.question = "Which item do you want to open?"
+        i.options = [1..30, :cancel]
+      end.ask_and_wait_for_valid_response do |response|
+        expect(response).to be_whole_number_20
+        expect(response).not_to be_cancel
+        expect(response).not_to be_whole_number_1
+      end
+    end
   end
 end
