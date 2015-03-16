@@ -1,3 +1,5 @@
+require 'interactive'
+
 module Interactive
   class Response
     def initialize(*args)
@@ -47,7 +49,7 @@ module Interactive
     end
 
     def first_chars_not_unique
-      @args.map{|arg| whole_num(arg) ? arg : arg[0]}.uniq.length != @args.length
+      @args.map{|arg| Interactive::Option.new(arg).shortcut_value }.uniq.length != @args.length
     end
 
     def set_args(args)
