@@ -27,21 +27,24 @@ If you want to ask a user a question expecting certain answers:
 
 ```ruby
 question = Interactive::Question.new do |ques|
-  ques.question = "What do you want to do?"
-  ques.options = [:add, :edit, :update, :remove]
+  ques.question = "Which item do you want to use?"
+  ques.options = [1..3, :cancel, :quit]
 end
 ```
 
-You can run the loop and wait for a valid response:
+You can run the loop and wait for a valid response and do query methods on the
+response:
 
 ```ruby
 question.ask_and_wait_for_valid_response do |response|
-  if response.add?
-    # add the thingymajigger
-  elsif response.edit?
-    # edit the thingymajigger
-  elsif response.update?
-    # etc...
+  if response.whole_num_1?
+    # do stuff if user responded with "1"
+  elsif response.whole_num?
+    # do stuff if user responded with "1", "2", or "3"
+  elsif response.cancel?
+    # do stuff if user responded with "c", etc.
+  elsif response.quit?
+    # do stuff if user responded with "q", etc.
   end
 end
 ```
@@ -49,7 +52,7 @@ end
 That will ask the question appended by the shortcuts:
 
 ```ruby
-# => What do you want to do? [a/e/u/r]
+# => "Which item do you want to use? [1/2/3/c/q]"
 ```
 
 If the response is valid:
@@ -64,11 +67,12 @@ to what the shortcuts stand for:
 
 ```ruby
 $ bad-response
-# => What do you want to do? [a/e/u/r]
-# =>   a -- add
-# =>   e -- edit
-# =>   u -- update
-# =>   r -- remove
+# => Which item do you want to use? [1/2/3/c/q]
+# =>   1 -- 1
+# =>   2 -- 2
+# =>   3 -- 3
+# =>   c -- cancel
+# =>   q -- quit
 ```
 
 ## Development
