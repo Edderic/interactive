@@ -53,7 +53,8 @@ describe 'Interactive::Question' do
       yes_response = instance_double('String', chomp: 'y')
       response_spy = double('response', yes: nil, no: nil, cancel: nil)
       allow(STDIN).to receive(:gets).and_return(yes_response)
-      allow(iq).to receive(:puts).with(question_with_opts)
+      allow_any_instance_of(QuestionWithLazyFullExplanation).to receive(:puts).with(question_with_opts)
+      expect_any_instance_of(QuestionWithLazyFullExplanation).to receive(:puts).with(question_with_opts)
 
       iq.ask_and_wait_for_valid_response do |response|
         if response.yes?
@@ -66,7 +67,6 @@ describe 'Interactive::Question' do
       end
 
       expect(response_spy).to have_received(:yes)
-      expect(iq).to have_received(:puts).with(question_with_opts)
     end
 
     describe 'response is invalid' do
@@ -85,7 +85,9 @@ describe 'Interactive::Question' do
         yes_response = instance_double('String', chomp: 'y')
         response_spy = double('response', yes: nil, no: nil, cancel: nil)
         allow(STDIN).to receive(:gets).and_return(bad_response, yes_response)
-        allow(iq).to receive(:puts)
+        allow_any_instance_of(QuestionWithLazyFullExplanation).to receive(:puts)
+        expect_any_instance_of(QuestionWithLazyFullExplanation).to receive(:puts).with(question_with_opts).twice
+        expect_any_instance_of(QuestionWithLazyFullExplanation).to receive(:puts).with(meaning_opts).once
 
         iq.ask_and_wait_for_valid_response do |response|
           if response.yes?
@@ -98,8 +100,6 @@ describe 'Interactive::Question' do
         end
 
         expect(response_spy).to have_received(:yes)
-        expect(iq).to have_received(:puts).with(question_with_opts).twice
-        expect(iq).to have_received(:puts).with(meaning_opts).once
       end
     end
 
@@ -129,6 +129,23 @@ describe 'Interactive::Question' do
         expect(response).to be_whole_number_0
         expect(response).not_to be_cancel
         expect(response).not_to be_whole_number_1
+      end
+    end
+
+    it 'shows full options when given indexed options' do
+      response_0 = instance_double('String', chomp: '0')
+      indexed_options = ['/some/path', '/some/other/path']
+      allow(STDIN).to receive(:gets).and_return(response_0)
+
+      question = Interactive::Question.new do |i|
+        i.question = "Which item do you want to open?"
+        i.options = [indexed_options, :cancel]
+      end
+
+      allow_any_instance_of(QuestionWithEagerFullExplanation).to receive(:puts)
+      expect_any_instance_of(QuestionWithEagerFullExplanation).to receive(:puts).with("  0 -- /some/path\n  1 -- /some/other/path\n  c -- cancel\n")
+
+      question.ask_and_wait_for_valid_response do |response|
       end
     end
   end

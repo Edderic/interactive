@@ -19,6 +19,10 @@ module Interactive
       options.inject("") { |accum, opt| "#{accum}  #{opt.shortcut_value} -- #{opt.value}\n"}
     end
 
+    def has_hash?
+      @options.any? {|opt| opt.respond_to?(:to_hash) }
+    end
+
     private
 
     def flatten_ranges(options)
