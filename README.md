@@ -53,14 +53,13 @@ end
 That will ask the question appended by the shortcuts (without full explanation):
 
 ```sh
-"Which item do you want to use? [1/2/3/c/q]"
+Which item do you want to use? [1/2/3/c/q]
 ```
 
 If the response is valid:
 
 ```sh
-$ a
-  response.add? will return true
+$ a  # response.add? will return true
 ```
 
 If the response is invalid, it prints out the question and goes into detail as
