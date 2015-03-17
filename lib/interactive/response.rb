@@ -13,6 +13,10 @@ module Interactive
       define_whole_number
     end
 
+    def to_i
+      @_response.to_i
+    end
+
     private
 
     def check_validity

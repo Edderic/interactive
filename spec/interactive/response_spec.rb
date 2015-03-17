@@ -62,6 +62,10 @@ describe 'Interactive::Response' do
       it 'should not be cancel' do
         expect(@r).not_to be_cancel
       end
+
+      it '#to_i returns 1' do
+        expect(@r.to_i).to eq 1
+      end
     end
   end
 
