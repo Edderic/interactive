@@ -52,29 +52,30 @@ end
 
 That will ask the question appended by the shortcuts (without full explanation):
 
-```ruby
-# => "Which item do you want to use? [1/2/3/c/q]"
+```sh
+"Which item do you want to use? [1/2/3/c/q]"
 ```
 
 If the response is valid:
 
-```ruby
+```sh
 $ a
-# => response.add? will return true
+  response.add? will return true
 ```
 
 If the response is invalid, it prints out the question and goes into detail as
 to what the shortcuts stand for:
 
-```ruby
+```sh
 $ bad-response
-  => Which item do you want to use? [1/2/3/c/q]
-  =>   1 -- 1
-  =>   2 -- 2
-  =>   3 -- 3
-  =>   c -- cancel
-  =>   q -- quit
-``
+
+Which item do you want to use? [1/2/3/c/q]
+  1 -- 1
+  2 -- 2
+  3 -- 3
+  c -- cancel
+  q -- quit
+```
 
 ### Questions With Eager Shortcut Explanations
 
@@ -101,11 +102,11 @@ end
 
 This will ask the question and show the explanation eagerly:
 
-```ruby
-# Which path do you want to use? [0/1/c]
-#   0 -- /some/path
-#   1 -- /some/other/path
-#   c -- cancel
+```sh
+Which path do you want to use? [0/1/c]
+  0 -- /some/path
+  1 -- /some/other/path
+  c -- cancel
 ```
 
 ## Development
