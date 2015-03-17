@@ -23,6 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
+### Questions With Lazy Shortcut Explanations
 If you want to ask a user a question expecting certain answers:
 
 ```ruby
@@ -49,7 +50,7 @@ question.ask_and_wait_for_valid_response do |response|
 end
 ```
 
-That will ask the question appended by the shortcuts:
+That will ask the question appended by the shortcuts (without full explanation):
 
 ```ruby
 # => "Which item do you want to use? [1/2/3/c/q]"
@@ -67,12 +68,44 @@ to what the shortcuts stand for:
 
 ```ruby
 $ bad-response
-# => Which item do you want to use? [1/2/3/c/q]
-# =>   1 -- 1
-# =>   2 -- 2
-# =>   3 -- 3
-# =>   c -- cancel
-# =>   q -- quit
+  => Which item do you want to use? [1/2/3/c/q]
+  =>   1 -- 1
+  =>   2 -- 2
+  =>   3 -- 3
+  =>   c -- cancel
+  =>   q -- quit
+``
+
+### Questions With Eager Shortcut Explanations
+
+Providing an array of options to the options array will trigger the shortcut
+explanation right after asking the question:
+
+```ruby
+
+options_list = ["/some/path", "/some/other/path"]
+iq = Interactive::Question.new do |q|
+  q.question = "Which path do you want to use?"
+  q.options = [options_list, :cancel]
+end
+
+iq.ask_and_wait_for_valid_response do |response|
+  if response.whole_number?
+    # response.to_i will convert the response string to an integer.
+    # useful for getting the index (i.e. options_list[response.to_i])
+  elsif response.cancel?
+    # do stuff to cancel...
+  end
+end
+```
+
+This will ask the question and show the explanation eagerly:
+
+```ruby
+# Which path do you want to use? [0/1/c]
+#   0 -- /some/path
+#   1 -- /some/other/path
+#   c -- cancel
 ```
 
 ## Development
