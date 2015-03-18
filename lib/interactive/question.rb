@@ -11,6 +11,7 @@ module Interactive
       raise ArgumentError, "options cannot be empty." if options.empty?
 
       @question_type = @options.has_hash? ? QuestionWithEagerFullExplanation.new(self) : QuestionWithLazyFullExplanation.new(self)
+      alias :ask :ask_and_wait_for_valid_response
     end
 
     def ask_and_wait_for_valid_response(&block)
