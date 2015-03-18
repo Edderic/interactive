@@ -1,7 +1,7 @@
 require 'interactive'
 
 module Interactive
-  class Response
+  class Response < SimpleDelegator
     def initialize(*args)
       @args = Array(args).flatten
       check_validity
@@ -11,10 +11,8 @@ module Interactive
       define_methods
       define_invalid
       define_whole_number
-    end
 
-    def to_i
-      @_response.to_i
+      super(@_response)
     end
 
     private
@@ -23,7 +21,6 @@ module Interactive
       raise ArgumentError, "may not use :invalid or 'invalid' as an argument. Private method." if @args.map(&:to_s).include?('invalid')
       raise ArgumentError, "may not use :whole_number or 'whole_number' as an argument. Private method." if @args.map(&:to_s).include?('whole_number')
       raise ArgumentError, "may not have keyword options that have the same first letter." if first_chars_not_unique
-      raise ArgumentError, "wrong number of arguments (need at least two arguments)." if @args.length < 2
     end
 
     def define_methods

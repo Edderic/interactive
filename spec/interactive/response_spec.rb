@@ -25,14 +25,6 @@ describe 'Interactive::Response' do
     end
   end
 
-  describe 'with only one arg' do
-    it 'raises an error' do
-      message = "wrong number of arguments (need at least two arguments)."
-      args = Interactive::Options.new([:yes])
-      expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
-    end
-  end
-
   describe 'with args 1, 2, 3, :cancel' do
     describe '1 is the response' do
       before do
@@ -168,6 +160,17 @@ describe 'Interactive::Response' do
       it 'is invalid' do
         expect(@r).to be_invalid
       end
+    end
+  end
+
+  describe 'response is "hello"' do
+    it 'response should be "hello"' do
+      response = double('String', chomp: 'hello')
+      allow(STDIN).to receive(:gets).and_return(response)
+
+      args = Interactive::Options.new([:yes, :no, :cancel])
+      @r = Interactive::Response.new(args)
+      expect(@r).to eq 'hello'
     end
   end
 end
