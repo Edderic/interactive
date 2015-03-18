@@ -27,19 +27,6 @@ describe 'Interactive::Question' do
       end.to raise_error(ArgumentError, "question cannot be nil nor empty.")
     end
 
-    it 'raises an error if options is empty' do
-      question = "Do you want to go?"
-      question_with_opts = "#{question} [y/n/c]"
-      options = nil
-
-      expect do
-        iq = Interactive::Question.new do |i|
-          i.question = question
-          i.options = options
-        end
-      end.to raise_error(ArgumentError, "options cannot be empty.")
-    end
-
     it 'should ask the question' do
       question = "Which item do you want to use?"
       question_with_opts = "#{question} [y/n/c]"

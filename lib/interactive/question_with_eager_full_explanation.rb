@@ -3,7 +3,7 @@ class QuestionWithEagerFullExplanation < SimpleDelegator
     loop do
       puts "#{question} #{options.shortcuts_string}"
       puts options.shortcuts_meanings
-      resp = Interactive::Response.new(options)
+      resp = Interactive::Response(options)
 
       yield resp
       break unless resp.invalid?

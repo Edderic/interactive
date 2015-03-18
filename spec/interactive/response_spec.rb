@@ -1,11 +1,29 @@
 require 'spec_helper'
 
 describe 'Interactive::Response' do
+  describe 'with an empty array' do
+    it 'should be invalid' do
+      whatever_answer = 'Whatever'
+      allow(STDIN).to receive(:gets).and_return(whatever_answer)
+      response = Interactive::Response([])
+
+      expect(response).not_to be_invalid
+    end
+
+    it 'should be valid' do
+      whatever_answer = 'Whatever'
+      allow(STDIN).to receive(:gets).and_return(whatever_answer)
+      response = Interactive::Response([])
+
+      expect(response).to be_valid
+    end
+  end
   describe 'two of the option keywords have the same first letter' do
     it 'raises an error' do
       message = "may not have keyword options that have the same first letter."
       args = Interactive::Options([:hello, :hi])
-      expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
+
+      expect{ Interactive::Response(args) }.to raise_error(ArgumentError, message)
     end
   end
 
@@ -13,7 +31,7 @@ describe 'Interactive::Response' do
     it 'raises an error' do
       message = "may not use :whole_number or 'whole_number' as an argument. Private method."
       args = Interactive::Options([:yes, :whole_number])
-      expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
+      expect{ Interactive::Response(args) }.to raise_error(ArgumentError, message)
     end
   end
 
@@ -21,7 +39,7 @@ describe 'Interactive::Response' do
     it 'raises an error' do
       message = "may not use :invalid or 'invalid' as an argument. Private method."
       args = Interactive::Options([:yes, :invalid])
-      expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
+      expect{ Interactive::Response(args) }.to raise_error(ArgumentError, message)
     end
   end
 
@@ -32,7 +50,7 @@ describe 'Interactive::Response' do
         allow(STDIN).to receive(:gets).and_return(one_response)
 
         options = Interactive::Options([1, 2, 3, :cancel])
-        @r = Interactive::Response.new(options)
+        @r = Interactive::Response(options)
       end
 
       it 'should be whole number 1' do
@@ -68,7 +86,7 @@ describe 'Interactive::Response' do
         allow(STDIN).to receive(:gets).and_return(yes_response)
 
         args = Interactive::Options([:yes, :no, :cancel, :interact])
-        @r = Interactive::Response.new(args)
+        @r = Interactive::Response(args)
       end
 
       it 'is a yes' do
@@ -98,7 +116,7 @@ describe 'Interactive::Response' do
         allow(STDIN).to receive(:gets).and_return(yes_response)
 
         args = Interactive::Options([:yes, :no, :cancel])
-        @r = Interactive::Response.new(args)
+        @r = Interactive::Response(args)
       end
 
       it 'is a yes' do
@@ -120,7 +138,7 @@ describe 'Interactive::Response' do
         allow(STDIN).to receive(:gets).and_return(yes_response)
 
         args = Interactive::Options([:yes, :no, :cancel])
-        @r = Interactive::Response.new(args)
+        @r = Interactive::Response(args)
       end
 
       it 'is not a no' do
@@ -142,7 +160,7 @@ describe 'Interactive::Response' do
         allow(STDIN).to receive(:gets).and_return(bad_response)
 
         args = Interactive::Options([:yes, :no, :cancel])
-        @r = Interactive::Response.new(args)
+        @r = Interactive::Response(args)
       end
 
       it 'is not a no' do
@@ -169,7 +187,7 @@ describe 'Interactive::Response' do
       allow(STDIN).to receive(:gets).and_return(response)
 
       args = Interactive::Options([:yes, :no, :cancel])
-      @r = Interactive::Response.new(args)
+      @r = Interactive::Response(args)
       expect(@r).to eq 'hello'
     end
   end

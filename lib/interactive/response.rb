@@ -1,7 +1,29 @@
 require 'interactive'
 
 module Interactive
-  class Response < SimpleDelegator
+  module_function
+
+  def Response(*args)
+    args = Array(args).flatten
+    args.empty? ? ResponseWithNoArgs.new(args) : ResponseWithArgs.new(args)
+  end
+
+  class ResponseWithNoArgs < SimpleDelegator
+    def initialize(*args)
+      @_response = STDIN.gets.chomp
+      super(@_response)
+    end
+
+    def valid?
+      true
+    end
+
+    def invalid?
+      false
+    end
+  end
+
+  class ResponseWithArgs < SimpleDelegator
     def initialize(*args)
       @args = Array(args).flatten
       check_validity

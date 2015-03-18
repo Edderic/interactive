@@ -8,8 +8,6 @@ module Interactive
       @options = Interactive::Options(Array(@options))
 
       raise ArgumentError, "question cannot be nil nor empty." if question.nil? || question.empty?
-      raise ArgumentError, "options cannot be empty." if options.empty?
-
       @question_type = @options.has_hash? ? QuestionWithEagerFullExplanation.new(self) : QuestionWithLazyFullExplanation.new(self)
       alias :ask :ask_and_wait_for_valid_response
     end
