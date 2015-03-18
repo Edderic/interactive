@@ -23,16 +23,51 @@ Or install it yourself as:
 
 ## Usage
 
-### Questions With Lazy Shortcut Explanations
-If you want to ask a user a question expecting certain answers:
-
-
+### Questions Without any Options
+If you want to ask a user a question accepting all answers:
 
 ```ruby
 require 'interactive'
 include 'interactive'
 
-# ...
+question = Question.new do |q|
+  q.question = "What is your api token password?"
+end
+
+question.ask do |response|
+  # response is an object that responds to string methods
+  puts response.split
+end
+```
+
+This will ask:
+
+```ruby
+=> What are your project ids?
+```
+
+You can respond like so, for example:
+
+```ruby
+$ 123someid hello4545 12992hhoo
+```
+
+That will give us the following:
+
+```ruby
+=> 123someid
+   hello4545
+   12992hhoo
+```
+
+### Questions With Lazy Shortcut Explanations
+
+If you want to ask a user a question expecting certain answers:
+
+
+```ruby
+require 'interactive'
+include 'interactive'
 
 question = Question.new do |q|
   q.question = "Which item do you want to use?"
