@@ -30,6 +30,7 @@ If you want to ask a user a question expecting certain answers:
 
 ```ruby
 require 'interactive'
+include 'interactive'
 
 # ...
 
@@ -89,6 +90,9 @@ explanation right after asking the question:
 
 ```ruby
 require 'interactive'
+include 'interactive'
+
+# ...
 
 options_list = ["/some/path", "/some/other/path"]
 iq = Question.new do |q|
