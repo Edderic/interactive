@@ -26,10 +26,16 @@ Or install it yourself as:
 ### Questions With Lazy Shortcut Explanations
 If you want to ask a user a question expecting certain answers:
 
+
+
 ```ruby
-question = Interactive::Question.new do |ques|
-  ques.question = "Which item do you want to use?"
-  ques.options = [1..3, :cancel, :quit]
+require 'interactive'
+
+# ...
+
+question = Question.new do |q|
+  q.question = "Which item do you want to use?"
+  q.options = [1..3, :cancel, :quit]
 end
 ```
 
@@ -37,7 +43,7 @@ You can run the loop and wait for a valid response and do query methods on the
 response:
 
 ```ruby
-question.ask_and_wait_for_valid_response do |response|
+question.ask do |response|
   if response.whole_num_1?
     # do stuff if user responded with "1"
   elsif response.whole_num?
@@ -82,14 +88,15 @@ Providing an array of options to the options array will trigger the shortcut
 explanation right after asking the question:
 
 ```ruby
+require 'interactive'
 
 options_list = ["/some/path", "/some/other/path"]
-iq = Interactive::Question.new do |q|
+iq = Question.new do |q|
   q.question = "Which path do you want to use?"
   q.options = [options_list, :cancel]
 end
 
-iq.ask_and_wait_for_valid_response do |response|
+iq.ask do |response|
   if response.whole_number?
     # response.to_i will convert the response string to an integer.
     # useful for getting the index (i.e. options_list[response.to_i])
