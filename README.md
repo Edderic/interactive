@@ -28,7 +28,7 @@ If you want to ask a user a question accepting all answers:
 
 ```ruby
 require 'interactive'
-include 'interactive'
+include Interactive
 
 question = Question.new do |q|
   q.question = "What is your api token password?"
@@ -67,7 +67,7 @@ If you want to ask a user a question expecting certain answers:
 
 ```ruby
 require 'interactive'
-include 'interactive'
+include Interactive
 
 question = Question.new do |q|
   q.question = "Which item do you want to use?"
@@ -125,7 +125,7 @@ explanation right after asking the question:
 
 ```ruby
 require 'interactive'
-include 'interactive'
+include Interactive
 
 # ...
 
