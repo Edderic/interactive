@@ -4,7 +4,7 @@ describe 'Interactive::Response' do
   describe 'two of the option keywords have the same first letter' do
     it 'raises an error' do
       message = "may not have keyword options that have the same first letter."
-      args = Interactive::Options.new([:hello, :hi])
+      args = Interactive::Options([:hello, :hi])
       expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
     end
   end
@@ -12,7 +12,7 @@ describe 'Interactive::Response' do
   describe 'have :whole_number as an arg' do
     it 'raises an error' do
       message = "may not use :whole_number or 'whole_number' as an argument. Private method."
-      args = Interactive::Options.new([:yes, :whole_number])
+      args = Interactive::Options([:yes, :whole_number])
       expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
     end
   end
@@ -20,7 +20,7 @@ describe 'Interactive::Response' do
   describe 'have :invalid as an arg' do
     it 'raises an error' do
       message = "may not use :invalid or 'invalid' as an argument. Private method."
-      args = Interactive::Options.new([:yes, :invalid])
+      args = Interactive::Options([:yes, :invalid])
       expect{ Interactive::Response.new(args) }.to raise_error(ArgumentError, message)
     end
   end
@@ -31,7 +31,7 @@ describe 'Interactive::Response' do
         one_response = double('String', chomp: '1')
         allow(STDIN).to receive(:gets).and_return(one_response)
 
-        options = Interactive::Options.new([1, 2, 3, :cancel])
+        options = Interactive::Options([1, 2, 3, :cancel])
         @r = Interactive::Response.new(options)
       end
 
@@ -67,7 +67,7 @@ describe 'Interactive::Response' do
         yes_response = double('String', chomp: 'y')
         allow(STDIN).to receive(:gets).and_return(yes_response)
 
-        args = Interactive::Options.new([:yes, :no, :cancel, :interact])
+        args = Interactive::Options([:yes, :no, :cancel, :interact])
         @r = Interactive::Response.new(args)
       end
 
@@ -97,7 +97,7 @@ describe 'Interactive::Response' do
         yes_response = double('String', chomp: 'Y')
         allow(STDIN).to receive(:gets).and_return(yes_response)
 
-        args = Interactive::Options.new([:yes, :no, :cancel])
+        args = Interactive::Options([:yes, :no, :cancel])
         @r = Interactive::Response.new(args)
       end
 
@@ -119,7 +119,7 @@ describe 'Interactive::Response' do
         yes_response = double('String', chomp: 'n')
         allow(STDIN).to receive(:gets).and_return(yes_response)
 
-        args = Interactive::Options.new([:yes, :no, :cancel])
+        args = Interactive::Options([:yes, :no, :cancel])
         @r = Interactive::Response.new(args)
       end
 
@@ -141,7 +141,7 @@ describe 'Interactive::Response' do
         bad_response = double('String', chomp: 'someinvalid')
         allow(STDIN).to receive(:gets).and_return(bad_response)
 
-        args = Interactive::Options.new([:yes, :no, :cancel])
+        args = Interactive::Options([:yes, :no, :cancel])
         @r = Interactive::Response.new(args)
       end
 
@@ -168,7 +168,7 @@ describe 'Interactive::Response' do
       response = double('String', chomp: 'hello')
       allow(STDIN).to receive(:gets).and_return(response)
 
-      args = Interactive::Options.new([:yes, :no, :cancel])
+      args = Interactive::Options([:yes, :no, :cancel])
       @r = Interactive::Response.new(args)
       expect(@r).to eq 'hello'
     end

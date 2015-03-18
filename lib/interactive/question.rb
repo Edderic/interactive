@@ -5,7 +5,7 @@ module Interactive
     def initialize(&block)
       yield self
 
-      @options = Interactive::Options.new(Array(@options))
+      @options = Interactive::Options(Array(@options))
 
       raise ArgumentError, "question cannot be nil nor empty." if question.nil? || question.empty?
       raise ArgumentError, "options cannot be empty." if options.empty?
