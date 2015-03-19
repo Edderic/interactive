@@ -149,5 +149,11 @@ describe 'Interactive::Question' do
       question.ask_and_wait_for_valid_response do |response|
       end
     end
+
+    it 'can have #ask be stubbable' do
+      expect do
+        instance_double('Interactive::Question', ask: nil)
+      end.not_to raise_error
+    end
   end
 end

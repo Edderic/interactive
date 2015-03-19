@@ -1,3 +1,9 @@
+v0.4.0 -- Thu Mar 19 08:32:20 EDT 2015
+--------------------------------------
+- added support for stubbing Question#ask RSpec's `instance_double` method.
+  (i.e. `instance_double("Interactive::Question", ask: nil)` does not
+   throw an error)
+
 v0.3.0 -- Wed Mar 18 11:28:05 EDT 2015
 --------------------------------------
 - Added support for questions without options
