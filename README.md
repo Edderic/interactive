@@ -154,6 +154,44 @@ Which path do you want to use? [0/1/c]
   c -- cancel
 ```
 
+### Question#reask
+```ruby
+
+require 'interactive'
+include Interactive
+
+outer_question = Question.new do |q|
+  q.question = "What do you want to do?"
+  q.options = [:eat, :sleep, :bathe]
+end
+
+inner_question = Question.new do |q|
+  q.question = "What do you want to eat?"
+  q.options = [:spaghetti, :mac_and_cheese, :back]
+end
+
+outer_question.ask do |outer_response|
+  if outer_response.eat?
+    inner_question.ask do |inner_response|
+      if inner_response.back?
+        outer_question.reask!
+      end
+    end
+  end
+end
+```
+
+Assume we answer `e` and `b`, for `eat` and `back`:
+
+```
+What do you want to do? [e/s/b]
+e
+What do you want to eat? [s/m/b]
+b
+What do you want to do? [e/s/b]
+...
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.

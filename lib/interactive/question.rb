@@ -1,6 +1,10 @@
+require 'forwardable'
+
 module Interactive
   class Question
+    extend Forwardable
     attr_accessor :question, :options
+    def_delegators :@question_type, :reask!
 
     def initialize(&block)
       yield self

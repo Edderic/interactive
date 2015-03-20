@@ -156,4 +156,37 @@ describe 'Interactive::Question' do
       end.not_to raise_error
     end
   end
+
+  describe 'nested questions, inner one having :back as an option' do
+    it 'should ask the outer question again' do
+      outer_question = Interactive::Question.new do |c|
+        c.question = "What would you like to do?"
+        c.options = [:cook, :exercise, :vacuum]
+      end
+
+      inner_question = Interactive::Question.new do |c|
+        c.question = "What do you want to cook?"
+        c.options = [:spaghetti, :pad_thai, :back]
+      end
+
+      outer_response_1 = instance_double('Response', cook?: true, invalid?: false)
+      outer_response_2 = instance_double('Response', cook?: false, invalid?: false)
+      inner_response = instance_double('Response', back?: true, invalid?: false)
+
+      allow(Interactive).to receive(:Response).and_return(outer_response_1, inner_response, outer_response_2)
+      allow(STDIN).to receive(:gets).and_return('c', 'b', 'e')
+      outer_question.ask do |outer_response|
+        if outer_response.cook?
+          inner_question.ask do |inner_response|
+            if inner_response.back?
+              outer_question.reask!
+            end
+          end
+        end
+      end
+
+      expect(outer_response_1).to have_received(:cook?)
+      expect(outer_response_2).to have_received(:cook?)
+    end
+  end
 end
