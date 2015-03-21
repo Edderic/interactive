@@ -1,3 +1,7 @@
+v0.5.0 -- Fri Mar 20 20:01:26 EDT 2015
+--------------------------------------
+- added `Question#reask`.
+
 v0.4.0 -- Thu Mar 19 08:32:20 EDT 2015
 --------------------------------------
 - added support for stubbing Question#ask RSpec's `instance_double` method.
