@@ -21,7 +21,7 @@ describe 'Interactive::Response' do
   describe 'two of the option keywords have the same first letter' do
     it 'raises an error' do
       message = "may not have keyword options that have the same first letter."
-      args = Interactive::Options([:hello, :hi])
+      args = Interactive::Options([:hello, :hi], nil)
 
       expect{ Interactive::Response(args) }.to raise_error(ArgumentError, message)
     end

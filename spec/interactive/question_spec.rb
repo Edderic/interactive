@@ -189,4 +189,36 @@ describe 'Interactive::Question' do
       expect(outer_response_2).to have_received(:cook?)
     end
   end
+
+  describe 'table-style question' do
+    it 'should display the question in a tabular fashion' do
+      object_1 = instance_double('obj', story_type: 'estimate',
+                                        estimate: 2,
+                                        name: 'pgit story should display list of stories for the current story',
+                                        status: 'unstarted')
+
+      object_2 = instance_double('obj', story_type: 'estimate',
+                                        estimate: nil,
+                                        name: 'hello world',
+                                        status: 'unstarted')
+      columns = [:index, :story_type, :estimate, :name, :status]
+      allow(STDIN).to receive(:gets).and_return('0')
+      question = Interactive::Question.new do |c|
+        c.question = "Which one are you interested in?"
+        c.options = [[object_1, object_2], :back]
+        c.columns = columns
+      end
+
+      headings = [:index, :story_type, :estimate, :name, :status]
+      table_string = '| some | table |'
+      table = double('table', to_s: table_string,
+                              align_column: nil,
+                              :<< => nil)
+      allow(Terminal::Table).to receive(:new).with(headings: headings).and_return(table)
+      question.ask do |r|
+      end
+
+      expect(table).to have_received(:to_s)
+    end
+  end
 end

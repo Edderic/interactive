@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Options' do
   describe '(1..3, :cancel)' do
     before do
-      @options = Interactive::Options([1..3, :cancel])
+      @options = Interactive::Options([1..3, :cancel], nil)
     end
 
     it 'transforms arguments into a full array' do
@@ -57,6 +57,37 @@ describe 'Options' do
 
     it '#has_hash? should be false' do
       expect(@options).not_to be_has_hash
+    end
+  end
+
+  describe 'with columns' do
+    before do
+      object_1 = double('some_object', name: 'hello', estimate: 2)
+      object_2 = double('some_object', name: 'hi', estimate: 3)
+      objects_options = [object_1, object_2]
+      columns = [:index, :name, :estimate]
+      @options = Interactive::Options([objects_options, :back], columns)
+    end
+
+    describe '#shortcuts_string' do
+      it 'should have the indices along with first character shortcuts' do
+        expect(@options.shortcuts_string).to match(/\[0\/1\/b\]/)
+      end
+    end
+
+    describe '#shortcuts_meanings' do
+      it 'should print out the table' do
+
+      end
+
+      it 'should also print out the non-tabular options' do
+        expect(@options.shortcuts_meanings).to match(/b -- back/)
+        expect(@options.shortcuts_meanings).to match(/index/)
+        expect(@options.shortcuts_meanings).to match(/name/)
+        expect(@options.shortcuts_meanings).to match(/estimate/)
+        expect(@options.shortcuts_meanings).to match(/hi/)
+        expect(@options.shortcuts_meanings).to match(/hello/)
+      end
     end
   end
 end
