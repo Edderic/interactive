@@ -1,3 +1,7 @@
+v0.6.0 -- Sat Mar 28 22:32:12 EDT 2015
+--------------------------------------
+- added support for displaying tabular data
+
 v0.5.0 -- Fri Mar 20 20:01:26 EDT 2015
 --------------------------------------
 - added `Question#reask`.

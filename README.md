@@ -154,6 +154,46 @@ Which path do you want to use? [0/1/c]
   c -- cancel
 ```
 
+You could also present tabular data:
+
+```ruby
+character_1 = OpenStruct.new(name: 'Frank Underwood', job: 'Vice President')
+character_2 = OpenStruct.new(name: 'Zoe Barnes', job: 'Reporter')
+characters_list = [character_1, character_2]
+
+iq = Question.new do |q|
+  q.question = "Which House of Cards character are you interested in?"
+  q.options = [characters_list, :cancel]
+  q.columns = [:index, :name, :job]
+end
+
+iq.ask do |response|
+  if response.whole_number?
+    # response.to_i will convert the response string to an integer.
+    # useful for getting the index (i.e. options_list[response.to_i])
+  elsif response.cancel?
+    # do stuff to cancel...
+  end
+end
+```
+
+This will ask the question with a table:
+
+```
+Which House of Cards character are you interested in? [0/1/c]
+  c -- cancel
++-------+-----------------+----------------+
+| index | name            | job            |
++-------+-----------------+----------------+
+| 0     | Frank Underwood | Vice President |
+| 1     | Zoe Barnes      | Reporter       |
++-------+-----------------+----------------+
+```
+
+Note that the second, and up to the last, value of the `columns` list are the
+messages that get sent to each object in the `objects` list of the `options`
+array.
+
 ### Question#reask
 ```ruby
 
