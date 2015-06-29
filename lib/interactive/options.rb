@@ -23,7 +23,7 @@ module Interactive
     end
 
     def shortcuts_string
-      "[#{first_chars_without_last_slash(first_chars)}]"
+      "[#{OptionsShortcuts.new(first_chars_without_last_slash(first_chars)).minify}]"
     end
 
     def shortcuts_meanings

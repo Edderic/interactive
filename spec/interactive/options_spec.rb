@@ -14,7 +14,7 @@ describe 'Options' do
     end
 
     it 'prints the shortcuts correctly' do
-      expect(@options.shortcuts_string).to eq "[1/2/3/c]"
+      expect(@options.shortcuts_string).to eq "[1..3/c]"
     end
 
     it 'prints the meanings correctly' do
@@ -34,7 +34,7 @@ describe 'Options' do
     end
 
     it 'prints the shortcuts correctly' do
-      expect(@options.shortcuts_string).to eq "[0/1/c]"
+      expect(@options.shortcuts_string).to eq "[0..1/c]"
     end
 
     it 'prints the meanings correctly' do
@@ -71,15 +71,11 @@ describe 'Options' do
 
     describe '#shortcuts_string' do
       it 'should have the indices along with first character shortcuts' do
-        expect(@options.shortcuts_string).to match(/\[0\/1\/b\]/)
+        expect(@options.shortcuts_string).to match(/\[0..1\/b\]/)
       end
     end
 
     describe '#shortcuts_meanings' do
-      it 'should print out the table' do
-
-      end
-
       it 'should also print out the non-tabular options' do
         expect(@options.shortcuts_meanings).to match(/b -- back/)
         expect(@options.shortcuts_meanings).to match(/index/)

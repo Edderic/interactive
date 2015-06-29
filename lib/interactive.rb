@@ -7,4 +7,5 @@ require "interactive/question_with_eager_full_explanation"
 require "interactive/question_with_lazy_full_explanation"
 require 'interactive/question'
 require 'interactive/response'
+require 'interactive/options_shortcuts'
 
