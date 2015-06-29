@@ -1,3 +1,11 @@
+v0.6.2 -- Sun Jun 28 22:57:18 EDT 2015
+--------------------------------------
+- Display condensed version of indices as a range.
+
+v0.6.1 -- Sun Jun 28 22:57:18 EDT 2015
+--------------------------------------
+- pegged gem in runtime dependency because automatic update broke
+
 v0.6.0 -- Sat Mar 28 22:32:12 EDT 2015
 --------------------------------------
 - added support for displaying tabular data
